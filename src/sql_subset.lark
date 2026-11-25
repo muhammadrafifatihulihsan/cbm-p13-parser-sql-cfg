@@ -1,0 +1,47 @@
+// Tata bahasa CFG yang diekstrak dari tangga presedensi sqlglot/parser.py.
+// Terminal ditulis dengan huruf besar, nonterminal dengan huruf kecil.
+// Bentuk rekursi kiri (disjunction -> conjunction OR conjunction) ditulis apa
+// adanya seperti pada buku teks, walaupun sqlglot menerapkannya sebagai while.
+
+start: stmt
+stmt: select_stmt | expr
+select_stmt: SELECT select_list [FROM table_ref] [WHERE expr]
+select_list: select_item ("," select_item)*
+select_item: STAR | expr alias?
+alias: AS? ident
+table_ref: ident alias?
+expr: disjunction
+disjunction: conjunction (OR conjunction)*
+conjunction: equality (AND equality)*
+equality: comparison ((EQ|NE) comparison)*
+comparison: additive ((LT|GT|LE|GE) additive)*
+additive: multiplicative ((PLUS|MINUS) multiplicative)*
+multiplicative: unary ((STAR|SLASH|PERCENT) unary)*
+unary: (MINUS|PLUS|NOT) unary | primary
+primary: NUMBER | STRING | ident | ident "(" [arglist] ")" | "(" expr ")"
+arglist: expr ("," expr)*
+ident: IDENT ("." IDENT)*
+
+SELECT.5: "SELECT"
+FROM.5: "FROM"
+WHERE.5: "WHERE"
+AS.5: "AS"
+AND.5: "AND"
+OR.5: "OR"
+NOT.5: "NOT"
+EQ: "="
+NE: "<>" | "!="
+LE: "<="
+GE: ">="
+LT: "<"
+GT: ">"
+PLUS: "+"
+MINUS: "-"
+STAR: "*"
+SLASH: "/"
+PERCENT: "%"
+NUMBER: /\d+(\.\d+)?/
+STRING: /'[^']*'/
+IDENT: /(?!(SELECT|FROM|WHERE|AS|AND|OR|NOT)\b)[A-Za-z_][A-Za-z_0-9]*/
+%import common.WS
+%ignore WS
