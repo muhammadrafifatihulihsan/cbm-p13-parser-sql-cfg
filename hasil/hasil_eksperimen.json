@@ -1,0 +1,1052 @@
+{
+  "lingkungan": {
+    "python": "3.13.12",
+    "sqlglot": "30.34.0",
+    "lark": "1.3.1",
+    "sistem": "Windows 11",
+    "garis_parser": 11071,
+    "garis_tokens": 637,
+    "sha256_parser": "7535470bea37463e15f9ad8a601f534fd43ec73a0c2b590f3e08e6f907f52ea4",
+    "sha256_tokens": "c5dc01035f9301fb9c79004b28c36c233e7ebdde925866f762f9735469d609ef",
+    "tipe_token": 454,
+    "kata_kunci": 320,
+    "token_tunggal": 30,
+    "garis_tokenizer_core": 1546,
+    "sha256_tokenizer_core": "29ee22a8e7e1b8a19e28afe3ca1af6c0565207fbde1cfc7efa51f6ddcb94a54c",
+    "batas_rekursi_python": 1000
+  },
+  "tata_bahasa": {
+    "terminal": [
+      "SELECT",
+      "FROM",
+      "WHERE",
+      "AS",
+      "AND",
+      "OR",
+      "NOT",
+      "EQ",
+      "NE",
+      "LE",
+      "GE",
+      "LT",
+      "GT",
+      "PLUS",
+      "MINUS",
+      "STAR",
+      "SLASH",
+      "PERCENT",
+      "NUMBER",
+      "STRING",
+      "IDENT"
+    ],
+    "jumlah_terminal": 21,
+    "jumlah_produksi": 24,
+    "jumlah_nonterminal": 17,
+    "produksi": [
+      {
+        "kiri": "stmt",
+        "kanan": "select_stmt"
+      },
+      {
+        "kiri": "stmt",
+        "kanan": "expr"
+      },
+      {
+        "kiri": "select_stmt",
+        "kanan": "SELECT select_list [FROM table_ref] [WHERE expr]"
+      },
+      {
+        "kiri": "select_list",
+        "kanan": "select_item (\",\" select_item)*"
+      },
+      {
+        "kiri": "select_item",
+        "kanan": "STAR"
+      },
+      {
+        "kiri": "select_item",
+        "kanan": "expr alias?"
+      },
+      {
+        "kiri": "alias",
+        "kanan": "AS? ident"
+      },
+      {
+        "kiri": "table_ref",
+        "kanan": "ident alias?"
+      },
+      {
+        "kiri": "expr",
+        "kanan": "disjunction"
+      },
+      {
+        "kiri": "disjunction",
+        "kanan": "conjunction (OR conjunction)*"
+      },
+      {
+        "kiri": "conjunction",
+        "kanan": "equality (AND equality)*"
+      },
+      {
+        "kiri": "equality",
+        "kanan": "comparison ((EQ|NE) comparison)*"
+      },
+      {
+        "kiri": "comparison",
+        "kanan": "additive ((LT|GT|LE|GE) additive)*"
+      },
+      {
+        "kiri": "additive",
+        "kanan": "multiplicative ((PLUS|MINUS) multiplicative)*"
+      },
+      {
+        "kiri": "multiplicative",
+        "kanan": "unary ((STAR|SLASH|PERCENT) unary)*"
+      },
+      {
+        "kiri": "unary",
+        "kanan": "(MINUS|PLUS|NOT) unary"
+      },
+      {
+        "kiri": "unary",
+        "kanan": "primary"
+      },
+      {
+        "kiri": "primary",
+        "kanan": "NUMBER"
+      },
+      {
+        "kiri": "primary",
+        "kanan": "STRING"
+      },
+      {
+        "kiri": "primary",
+        "kanan": "ident"
+      },
+      {
+        "kiri": "primary",
+        "kanan": "ident \"(\" [arglist] \")\""
+      },
+      {
+        "kiri": "primary",
+        "kanan": "\"(\" expr \")\""
+      },
+      {
+        "kiri": "arglist",
+        "kanan": "expr (\",\" expr)*"
+      },
+      {
+        "kiri": "ident",
+        "kanan": "IDENT (\".\" IDENT)*"
+      }
+    ]
+  },
+  "korpus": {
+    "valid": [
+      {
+        "sql": "SELECT 1",
+        "token": 2,
+        "node": 2,
+        "kedalaman": 2,
+        "waktu_ms": 0.057,
+        "sqlglot": "diterima",
+        "lark": "diterima",
+        "bentuk_sama": true,
+        "bentuk": "('num', '1')"
+      },
+      {
+        "sql": "SELECT a",
+        "token": 2,
+        "node": 3,
+        "kedalaman": 3,
+        "waktu_ms": 0.053,
+        "sqlglot": "diterima",
+        "lark": "diterima",
+        "bentuk_sama": true,
+        "bentuk": "('ident', 'a')"
+      },
+      {
+        "sql": "SELECT * FROM t",
+        "token": 4,
+        "node": 5,
+        "kedalaman": 4,
+        "waktu_ms": 0.068,
+        "sqlglot": "diterima",
+        "lark": "diterima",
+        "bentuk_sama": null,
+        "bentuk": "('star',)"
+      },
+      {
+        "sql": "SELECT a, b FROM t",
+        "token": 6,
+        "node": 8,
+        "kedalaman": 4,
+        "waktu_ms": 0.078,
+        "sqlglot": "diterima",
+        "lark": "diterima",
+        "bentuk_sama": true,
+        "bentuk": "('ident', 'a')"
+      },
+      {
+        "sql": "SELECT a + 1 AS x FROM t WHERE b = 2",
+        "token": 12,
+        "node": 15,
+        "kedalaman": 5,
+        "waktu_ms": 0.114,
+        "sqlglot": "diterima",
+        "lark": "diterima",
+        "bentuk_sama": true,
+        "bentuk": "('add', ('ident', 'a'), ('num', '1'))"
+      },
+      {
+        "sql": "SELECT a FROM t WHERE a > 1 AND b < 2",
+        "token": 12,
+        "node": 16,
+        "kedalaman": 6,
+        "waktu_ms": 0.11,
+        "sqlglot": "diterima",
+        "lark": "diterima",
+        "bentuk_sama": true,
+        "bentuk": "('ident', 'a')"
+      },
+      {
+        "sql": "SELECT a OR b AND c FROM t",
+        "token": 8,
+        "node": 12,
+        "kedalaman": 5,
+        "waktu_ms": 0.09,
+        "sqlglot": "diterima",
+        "lark": "diterima",
+        "bentuk_sama": true,
+        "bentuk": "('or', ('ident', 'a'), ('and', ('ident', 'b'), ('ident', 'c')))"
+      },
+      {
+        "sql": "SELECT NOT a FROM t",
+        "token": 5,
+        "node": 7,
+        "kedalaman": 4,
+        "waktu_ms": 0.071,
+        "sqlglot": "diterima",
+        "lark": "diterima",
+        "bentuk_sama": true,
+        "bentuk": "('not', ('ident', 'a'))"
+      },
+      {
+        "sql": "SELECT (a + 1) * 2 FROM t",
+        "token": 10,
+        "node": 11,
+        "kedalaman": 6,
+        "waktu_ms": 0.097,
+        "sqlglot": "diterima",
+        "lark": "diterima",
+        "bentuk_sama": true,
+        "bentuk": "('mul', ('add', ('ident', 'a'), ('num', '1')), ('num', '2'))"
+      },
+      {
+        "sql": "SELECT COUNT(a) FROM t",
+        "token": 7,
+        "node": 7,
+        "kedalaman": 4,
+        "waktu_ms": 0.103,
+        "sqlglot": "diterima",
+        "lark": "diterima",
+        "bentuk_sama": true,
+        "bentuk": "('call', 'count', (('ident', 'a'),))"
+      },
+      {
+        "sql": "SELECT SUM(a), AVG(b) FROM t",
+        "token": 12,
+        "node": 10,
+        "kedalaman": 4,
+        "waktu_ms": 0.114,
+        "sqlglot": "diterima",
+        "lark": "diterima",
+        "bentuk_sama": true,
+        "bentuk": "('call', 'sum', (('ident', 'a'),))"
+      },
+      {
+        "sql": "SELECT 'teks' FROM t",
+        "token": 4,
+        "node": 5,
+        "kedalaman": 4,
+        "waktu_ms": 0.062,
+        "sqlglot": "diterima",
+        "lark": "diterima",
+        "bentuk_sama": true,
+        "bentuk": "('str', 'teks')"
+      },
+      {
+        "sql": "SELECT a FROM t AS x WHERE a <> 1",
+        "token": 10,
+        "node": 13,
+        "kedalaman": 5,
+        "waktu_ms": 0.099,
+        "sqlglot": "diterima",
+        "lark": "diterima",
+        "bentuk_sama": true,
+        "bentuk": "('ident', 'a')"
+      },
+      {
+        "sql": "SELECT a, b, c FROM t WHERE a <= 1 OR b >= 2",
+        "token": 16,
+        "node": 20,
+        "kedalaman": 6,
+        "waktu_ms": 0.132,
+        "sqlglot": "diterima",
+        "lark": "diterima",
+        "bentuk_sama": true,
+        "bentuk": "('ident', 'a')"
+      },
+      {
+        "sql": "SELECT -a + 1 FROM t",
+        "token": 7,
+        "node": 9,
+        "kedalaman": 5,
+        "waktu_ms": 0.076,
+        "sqlglot": "diterima",
+        "lark": "diterima",
+        "bentuk_sama": true,
+        "bentuk": "('add', ('neg', ('ident', 'a')), ('num', '1'))"
+      },
+      {
+        "sql": "SELECT a % 2 FROM t",
+        "token": 6,
+        "node": 8,
+        "kedalaman": 4,
+        "waktu_ms": 0.072,
+        "sqlglot": "diterima",
+        "lark": "diterima",
+        "bentuk_sama": true,
+        "bentuk": "('mod', ('ident', 'a'), ('num', '2'))"
+      },
+      {
+        "sql": "SELECT a * (b + c) FROM t",
+        "token": 10,
+        "node": 13,
+        "kedalaman": 6,
+        "waktu_ms": 0.095,
+        "sqlglot": "diterima",
+        "lark": "diterima",
+        "bentuk_sama": true,
+        "bentuk": "('mul', ('ident', 'a'), ('add', ('ident', 'b'), ('ident', 'c')))"
+      },
+      {
+        "sql": "SELECT a FROM t x",
+        "token": 5,
+        "node": 8,
+        "kedalaman": 5,
+        "waktu_ms": 0.069,
+        "sqlglot": "diterima",
+        "lark": "diterima",
+        "bentuk_sama": true,
+        "bentuk": "('ident', 'a')"
+      },
+      {
+        "sql": "SELECT t.a FROM t",
+        "token": 6,
+        "node": 7,
+        "kedalaman": 4,
+        "waktu_ms": 0.067,
+        "sqlglot": "diterima",
+        "lark": "diterima",
+        "bentuk_sama": true,
+        "bentuk": "('ident', 't.a')"
+      },
+      {
+        "sql": "SELECT a + b - c FROM t",
+        "token": 8,
+        "node": 12,
+        "kedalaman": 5,
+        "waktu_ms": 0.086,
+        "sqlglot": "diterima",
+        "lark": "diterima",
+        "bentuk_sama": true,
+        "bentuk": "('sub', ('add', ('ident', 'a'), ('ident', 'b')), ('ident', 'c'))"
+      },
+      {
+        "sql": "SELECT (a) FROM t",
+        "token": 6,
+        "node": 7,
+        "kedalaman": 4,
+        "waktu_ms": 0.074,
+        "sqlglot": "diterima",
+        "lark": "diterima",
+        "bentuk_sama": true,
+        "bentuk": "('ident', 'a')"
+      },
+      {
+        "sql": "SELECT abs(a) + 1 FROM t WHERE NOT a = 1",
+        "token": 14,
+        "node": 15,
+        "kedalaman": 6,
+        "waktu_ms": 0.117,
+        "sqlglot": "diterima",
+        "lark": "diterima",
+        "bentuk_sama": true,
+        "bentuk": "('add', ('call', 'abs', (('ident', 'a'),)), ('num', '1'))"
+      },
+      {
+        "sql": "SELECT a FROM t WHERE (a = 1) AND (b = 2)",
+        "token": 16,
+        "node": 18,
+        "kedalaman": 7,
+        "waktu_ms": 0.132,
+        "sqlglot": "diterima",
+        "lark": "diterima",
+        "bentuk_sama": true,
+        "bentuk": "('ident', 'a')"
+      },
+      {
+        "sql": "SELECT 2 * 3 + 4 * 5 FROM t WHERE a = 'x' AND b = 'y'",
+        "token": 18,
+        "node": 21,
+        "kedalaman": 6,
+        "waktu_ms": 0.127,
+        "sqlglot": "diterima",
+        "lark": "diterima",
+        "bentuk_sama": true,
+        "bentuk": "('add', ('mul', ('num', '2'), ('num', '3')), ('mul', ('num', '4'), ('num', '5')))"
+      }
+    ],
+    "tidak_valid": [
+      {
+        "sql": "SELECT",
+        "sqlglot": "diterima",
+        "lark": "ditolak"
+      },
+      {
+        "sql": "SELECT FROM t",
+        "sqlglot": "diterima",
+        "lark": "ditolak"
+      },
+      {
+        "sql": "SELECT a + FROM t",
+        "sqlglot": "ditolak",
+        "lark": "ditolak"
+      },
+      {
+        "sql": "SELECT (a + 1 FROM t",
+        "sqlglot": "ditolak",
+        "lark": "ditolak"
+      },
+      {
+        "sql": "SELECT a WHERE",
+        "sqlglot": "ditolak",
+        "lark": "ditolak"
+      },
+      {
+        "sql": "FROM t",
+        "sqlglot": "diterima",
+        "lark": "ditolak"
+      },
+      {
+        "sql": "SELECT a = = 1",
+        "sqlglot": "ditolak",
+        "lark": "ditolak"
+      },
+      {
+        "sql": "SELECT 1 +",
+        "sqlglot": "ditolak",
+        "lark": "ditolak"
+      },
+      {
+        "sql": "SELECT ,a FROM t",
+        "sqlglot": "diterima",
+        "lark": "ditolak"
+      },
+      {
+        "sql": "SELECT a FROM",
+        "sqlglot": "ditolak",
+        "lark": "ditolak"
+      },
+      {
+        "sql": "SELECT a AND FROM t",
+        "sqlglot": "ditolak",
+        "lark": "ditolak"
+      },
+      {
+        "sql": "WHERE a = 1",
+        "sqlglot": "ditolak",
+        "lark": "ditolak"
+      }
+    ],
+    "jumlah_valid": 24,
+    "jumlah_tidak_valid": 12,
+    "setuju_valid": 24,
+    "setuju_tidak_valid": 8,
+    "bentuk_sama": 23,
+    "bentuk_dibandingkan": 23,
+    "pemakaian_simbol": {
+      "unary": 76,
+      "primary": 73,
+      "ident": 70,
+      "multiplicative": 68,
+      "additive": 60,
+      "comparison": 56,
+      "equality": 49,
+      "conjunction": 45,
+      "expr": 43,
+      "disjunction": 43,
+      "select_item": 28,
+      "start": 24,
+      "stmt": 24,
+      "select_stmt": 24,
+      "select_list": 24,
+      "table_ref": 22,
+      "arglist": 4,
+      "alias": 3
+    }
+  },
+  "presedensi": [
+    {
+      "sql": "SELECT 1 + 2 * 3",
+      "kanonik": "('add', ('num', '1'), ('mul', ('num', '2'), ('num', '3')))",
+      "pohon": [
+        "add",
+        "  literal(this=1)",
+        "  mul",
+        "    literal(this=2)",
+        "    literal(this=3)"
+      ],
+      "pohon_penuh": [
+        "select",
+        "  add",
+        "    literal(this=1)",
+        "    mul",
+        "      literal(this=2)",
+        "      literal(this=3)"
+      ]
+    },
+    {
+      "sql": "SELECT 1 * 2 + 3",
+      "kanonik": "('add', ('mul', ('num', '1'), ('num', '2')), ('num', '3'))",
+      "pohon": [
+        "add",
+        "  mul",
+        "    literal(this=1)",
+        "    literal(this=2)",
+        "  literal(this=3)"
+      ],
+      "pohon_penuh": [
+        "select",
+        "  add",
+        "    mul",
+        "      literal(this=1)",
+        "      literal(this=2)",
+        "    literal(this=3)"
+      ]
+    },
+    {
+      "sql": "SELECT 1 - 2 - 3",
+      "kanonik": "('sub', ('sub', ('num', '1'), ('num', '2')), ('num', '3'))",
+      "pohon": [
+        "sub",
+        "  sub",
+        "    literal(this=1)",
+        "    literal(this=2)",
+        "  literal(this=3)"
+      ],
+      "pohon_penuh": [
+        "select",
+        "  sub",
+        "    sub",
+        "      literal(this=1)",
+        "      literal(this=2)",
+        "    literal(this=3)"
+      ]
+    },
+    {
+      "sql": "SELECT 1 + 2 + 3",
+      "kanonik": "('add', ('add', ('num', '1'), ('num', '2')), ('num', '3'))",
+      "pohon": [
+        "add",
+        "  add",
+        "    literal(this=1)",
+        "    literal(this=2)",
+        "  literal(this=3)"
+      ],
+      "pohon_penuh": [
+        "select",
+        "  add",
+        "    add",
+        "      literal(this=1)",
+        "      literal(this=2)",
+        "    literal(this=3)"
+      ]
+    },
+    {
+      "sql": "SELECT a OR b AND c",
+      "kanonik": "('or', ('ident', 'a'), ('and', ('ident', 'b'), ('ident', 'c')))",
+      "pohon": [
+        "or",
+        "  column",
+        "    identifier(this=a)",
+        "  and",
+        "    column",
+        "      identifier(this=b)",
+        "    column",
+        "      identifier(this=c)"
+      ],
+      "pohon_penuh": [
+        "select",
+        "  or",
+        "    column",
+        "      identifier(this=a)",
+        "    and",
+        "      column",
+        "        identifier(this=b)",
+        "      column",
+        "        identifier(this=c)"
+      ]
+    },
+    {
+      "sql": "SELECT NOT a AND b",
+      "kanonik": "('and', ('not', ('ident', 'a')), ('ident', 'b'))",
+      "pohon": [
+        "and",
+        "  not",
+        "    column",
+        "      identifier(this=a)",
+        "  column",
+        "    identifier(this=b)"
+      ],
+      "pohon_penuh": [
+        "select",
+        "  and",
+        "    not",
+        "      column",
+        "        identifier(this=a)",
+        "    column",
+        "      identifier(this=b)"
+      ]
+    },
+    {
+      "sql": "SELECT 2 ^ 3 ^ 2",
+      "kanonik": "('bitwisexor', ('bitwisexor', ('num', '2'), ('num', '3')), ('num', '2'))",
+      "pohon": [
+        "bitwisexor",
+        "  bitwisexor",
+        "    literal(this=2)",
+        "    literal(this=3)",
+        "  literal(this=2)"
+      ],
+      "pohon_penuh": [
+        "select",
+        "  bitwisexor",
+        "    bitwisexor",
+        "      literal(this=2)",
+        "      literal(this=3)",
+        "    literal(this=2)"
+      ]
+    },
+    {
+      "sql": "SELECT a = b AND c = d",
+      "kanonik": "('and', ('eq', ('ident', 'a'), ('ident', 'b')), ('eq', ('ident', 'c'), ('ident', 'd')))",
+      "pohon": [
+        "and",
+        "  eq",
+        "    column",
+        "      identifier(this=a)",
+        "    column",
+        "      identifier(this=b)",
+        "  eq",
+        "    column",
+        "      identifier(this=c)",
+        "    column",
+        "      identifier(this=d)"
+      ],
+      "pohon_penuh": [
+        "select",
+        "  and",
+        "    eq",
+        "      column",
+        "        identifier(this=a)",
+        "      column",
+        "        identifier(this=b)",
+        "    eq",
+        "      column",
+        "        identifier(this=c)",
+        "      column",
+        "        identifier(this=d)"
+      ]
+    },
+    {
+      "sql": "SELECT (1 + 2) * 3",
+      "kanonik": "('mul', ('add', ('num', '1'), ('num', '2')), ('num', '3'))",
+      "pohon": [
+        "mul",
+        "  paren",
+        "    add",
+        "      literal(this=1)",
+        "      literal(this=2)",
+        "  literal(this=3)"
+      ],
+      "pohon_penuh": [
+        "select",
+        "  mul",
+        "    paren",
+        "      add",
+        "        literal(this=1)",
+        "        literal(this=2)",
+        "    literal(this=3)"
+      ]
+    },
+    {
+      "sql": "SELECT 1 + 2 * 3 - 4 / 2",
+      "kanonik": "('sub', ('add', ('num', '1'), ('mul', ('num', '2'), ('num', '3'))), ('div', ('num', '4'), ('num', '2')))",
+      "pohon": [
+        "sub",
+        "  add",
+        "    literal(this=1)",
+        "    mul",
+        "      literal(this=2)",
+        "      literal(this=3)",
+        "  div",
+        "    literal(this=4)",
+        "    literal(this=2)"
+      ],
+      "pohon_penuh": [
+        "select",
+        "  sub",
+        "    add",
+        "      literal(this=1)",
+        "      mul",
+        "        literal(this=2)",
+        "        literal(this=3)",
+        "    div",
+        "      literal(this=4)",
+        "      literal(this=2)"
+      ]
+    },
+    {
+      "sql": "SELECT a AND b OR c",
+      "kanonik": "('or', ('and', ('ident', 'a'), ('ident', 'b')), ('ident', 'c'))",
+      "pohon": [
+        "or",
+        "  and",
+        "    column",
+        "      identifier(this=a)",
+        "    column",
+        "      identifier(this=b)",
+        "  column",
+        "    identifier(this=c)"
+      ],
+      "pohon_penuh": [
+        "select",
+        "  or",
+        "    and",
+        "      column",
+        "        identifier(this=a)",
+        "      column",
+        "        identifier(this=b)",
+        "    column",
+        "      identifier(this=c)"
+      ]
+    }
+  ],
+  "contoh": {
+    "sql": "SELECT a + 1 AS x FROM t WHERE b = 2",
+    "pohon_lark": "start\n  stmt\n    select_stmt\n      SELECT\n      select_list\n        select_item\n          expr\n            disjunction\n              conjunction\n                equality\n                  comparison\n                    additive\n                      multiplicative\n                        unary\n                          primary\n                            ident\ta\n                      +\n                      multiplicative\n                        unary\n                          primary\t1\n          alias\n            AS\n            ident\tx\n      FROM\n      table_ref\n        ident\tt\n      WHERE\n      expr\n        disjunction\n          conjunction\n            equality\n              comparison\n                additive\n                  multiplicative\n                    unary\n                      primary\n                        ident\tb\n              =\n              comparison\n                additive\n                  multiplicative\n                    unary\n                      primary\t2\n",
+    "pohon_sqlglot": [
+      "select",
+      "  alias",
+      "    add",
+      "      column",
+      "        identifier(this=a)",
+      "      literal(this=1)",
+      "    identifier(this=x)",
+      "  from",
+      "    table",
+      "      identifier(this=t)",
+      "  where",
+      "    eq",
+      "      column",
+      "        identifier(this=b)",
+      "      literal(this=2)"
+    ],
+    "derivasi": [
+      "start",
+      "stmt",
+      "select_stmt",
+      "SELECT select_list FROM table_ref WHERE expr",
+      "SELECT select_item FROM table_ref WHERE expr",
+      "SELECT expr alias FROM table_ref WHERE expr",
+      "SELECT disjunction alias FROM table_ref WHERE expr",
+      "SELECT conjunction alias FROM table_ref WHERE expr",
+      "SELECT equality alias FROM table_ref WHERE expr",
+      "SELECT comparison alias FROM table_ref WHERE expr",
+      "SELECT additive alias FROM table_ref WHERE expr",
+      "SELECT multiplicative + multiplicative alias FROM table_ref WHERE expr",
+      "SELECT unary + multiplicative alias FROM table_ref WHERE expr",
+      "SELECT primary + multiplicative alias FROM table_ref WHERE expr",
+      "SELECT ident + multiplicative alias FROM table_ref WHERE expr",
+      "SELECT a + multiplicative alias FROM table_ref WHERE expr",
+      "SELECT a + unary alias FROM table_ref WHERE expr",
+      "SELECT a + primary alias FROM table_ref WHERE expr",
+      "SELECT a + 1 alias FROM table_ref WHERE expr",
+      "SELECT a + 1 AS ident FROM table_ref WHERE expr",
+      "SELECT a + 1 AS x FROM table_ref WHERE expr",
+      "SELECT a + 1 AS x FROM ident WHERE expr",
+      "SELECT a + 1 AS x FROM t WHERE expr",
+      "SELECT a + 1 AS x FROM t WHERE disjunction",
+      "SELECT a + 1 AS x FROM t WHERE conjunction",
+      "SELECT a + 1 AS x FROM t WHERE equality",
+      "SELECT a + 1 AS x FROM t WHERE comparison = comparison",
+      "SELECT a + 1 AS x FROM t WHERE additive = comparison",
+      "SELECT a + 1 AS x FROM t WHERE multiplicative = comparison",
+      "SELECT a + 1 AS x FROM t WHERE unary = comparison",
+      "SELECT a + 1 AS x FROM t WHERE primary = comparison",
+      "SELECT a + 1 AS x FROM t WHERE ident = comparison",
+      "SELECT a + 1 AS x FROM t WHERE b = comparison",
+      "SELECT a + 1 AS x FROM t WHERE b = additive",
+      "SELECT a + 1 AS x FROM t WHERE b = multiplicative",
+      "SELECT a + 1 AS x FROM t WHERE b = unary",
+      "SELECT a + 1 AS x FROM t WHERE b = primary",
+      "SELECT a + 1 AS x FROM t WHERE b = 2"
+    ],
+    "token": [
+      "SELECT",
+      "a",
+      "+",
+      "1",
+      "AS",
+      "x",
+      "FROM",
+      "t",
+      "WHERE",
+      "b",
+      "=",
+      "2"
+    ],
+    "jenis_token": [
+      "SELECT",
+      "VAR",
+      "PLUS",
+      "NUMBER",
+      "ALIAS",
+      "VAR",
+      "FROM",
+      "VAR",
+      "WHERE",
+      "VAR",
+      "EQ",
+      "NUMBER"
+    ]
+  },
+  "sarang": [
+    {
+      "k": 1,
+      "status": "diterima",
+      "node": 3,
+      "kedalaman": 3,
+      "waktu_ms": 0.066
+    },
+    {
+      "k": 2,
+      "status": "diterima",
+      "node": 4,
+      "kedalaman": 4,
+      "waktu_ms": 0.078
+    },
+    {
+      "k": 3,
+      "status": "diterima",
+      "node": 5,
+      "kedalaman": 5,
+      "waktu_ms": 0.083
+    },
+    {
+      "k": 4,
+      "status": "diterima",
+      "node": 6,
+      "kedalaman": 6,
+      "waktu_ms": 0.11
+    },
+    {
+      "k": 5,
+      "status": "diterima",
+      "node": 7,
+      "kedalaman": 7,
+      "waktu_ms": 0.12
+    },
+    {
+      "k": 6,
+      "status": "diterima",
+      "node": 8,
+      "kedalaman": 8,
+      "waktu_ms": 0.127
+    },
+    {
+      "k": 8,
+      "status": "diterima",
+      "node": 10,
+      "kedalaman": 10,
+      "waktu_ms": 0.161
+    },
+    {
+      "k": 10,
+      "status": "diterima",
+      "node": 12,
+      "kedalaman": 12,
+      "waktu_ms": 0.181
+    },
+    {
+      "k": 15,
+      "status": "diterima",
+      "node": 17,
+      "kedalaman": 17,
+      "waktu_ms": 0.251
+    },
+    {
+      "k": 20,
+      "status": "diterima",
+      "node": 22,
+      "kedalaman": 22,
+      "waktu_ms": 0.293
+    },
+    {
+      "k": 30,
+      "status": "diterima",
+      "node": 32,
+      "kedalaman": 32,
+      "waktu_ms": 0.417
+    },
+    {
+      "k": 40,
+      "status": "diterima",
+      "node": 42,
+      "kedalaman": 42,
+      "waktu_ms": 0.599
+    },
+    {
+      "k": 50,
+      "status": "RecursionError"
+    }
+  ],
+  "subquery": [
+    {
+      "k": 1,
+      "status": "diterima",
+      "node": 10,
+      "kedalaman": 6,
+      "waktu_ms": 0.12
+    },
+    {
+      "k": 2,
+      "status": "diterima",
+      "node": 16,
+      "kedalaman": 9,
+      "waktu_ms": 0.149
+    },
+    {
+      "k": 3,
+      "status": "diterima",
+      "node": 22,
+      "kedalaman": 12,
+      "waktu_ms": 0.191
+    },
+    {
+      "k": 4,
+      "status": "diterima",
+      "node": 28,
+      "kedalaman": 15,
+      "waktu_ms": 0.231
+    },
+    {
+      "k": 5,
+      "status": "diterima",
+      "node": 34,
+      "kedalaman": 18,
+      "waktu_ms": 0.284
+    },
+    {
+      "k": 6,
+      "status": "diterima",
+      "node": 40,
+      "kedalaman": 21,
+      "waktu_ms": 0.326
+    },
+    {
+      "k": 8,
+      "status": "diterima",
+      "node": 52,
+      "kedalaman": 27,
+      "waktu_ms": 0.415
+    },
+    {
+      "k": 10,
+      "status": "diterima",
+      "node": 64,
+      "kedalaman": 33,
+      "waktu_ms": 0.482
+    },
+    {
+      "k": 15,
+      "status": "diterima",
+      "node": 94,
+      "kedalaman": 48,
+      "waktu_ms": 0.742
+    },
+    {
+      "k": 20,
+      "status": "diterima",
+      "node": 124,
+      "kedalaman": 63,
+      "waktu_ms": 0.911
+    },
+    {
+      "k": 30,
+      "status": "diterima",
+      "node": 184,
+      "kedalaman": 93,
+      "waktu_ms": 1.403
+    },
+    {
+      "k": 40,
+      "status": "diterima",
+      "node": 244,
+      "kedalaman": 123,
+      "waktu_ms": 1.932
+    }
+  ],
+  "batas_rekursi": {
+    "1000": {
+      "nilai": {
+        "kurung": 48,
+        "subquery": 120
+      }
+    },
+    "2000": {
+      "nilai": {
+        "kurung": 98,
+        "subquery": 245
+      }
+    },
+    "5000": {
+      "nilai": {
+        "kurung": 248,
+        "subquery": 400
+      }
+    }
+  },
+  "komposisi_node": {
+    "identifier": 67,
+    "column": 41,
+    "select": 24,
+    "literal": 23,
+    "from": 22,
+    "table": 22,
+    "where": 7,
+    "add": 7,
+    "eq": 6,
+    "paren": 5,
+    "and": 4,
+    "mul": 4,
+    "or": 2,
+    "not": 2,
+    "tablealias": 2,
+    "star": 1,
+    "alias": 1,
+    "gt": 1
+  }
+}

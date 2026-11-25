@@ -1,0 +1,10 @@
+lingkungan: Python 3.13.12, sqlglot 30.34.0, lark 1.3.1
+sumber: parser.py 11071 baris, tokens.py 637 baris
+tata bahasa: 24 produksi, 17 nonterminal
+korpus valid: 24 query, kesepakatan sqlglot-lark 24/24, bentuk pohon sama 23/23
+korpus tidak valid: 8/12 kesepakatan penolakan
+sarang kurung: {'k': 50, 'status': 'RecursionError'}
+subquery: {'k': 40, 'status': 'diterima', 'node': 244, 'kedalaman': 123, 'waktu_ms': 1.932}
+batas rekursi: {'1000': {'nilai': {'kurung': 48, 'subquery': 120}}, '2000': {'nilai': {'kurung': 98, 'subquery': 245}}, '5000': {'nilai': {'kurung': 248, 'subquery': 400}}}
+komposisi node teratas: [('identifier', 67), ('column', 41), ('select', 24), ('literal', 23), ('from', 22), ('table', 22)]
+hasil lengkap: hasil_eksperimen.json
