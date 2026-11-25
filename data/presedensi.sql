@@ -1,0 +1,11 @@
+SELECT 1 + 2 * 3;
+SELECT 1 * 2 + 3;
+SELECT 1 - 2 - 3;
+SELECT 1 + 2 + 3;
+SELECT a OR b AND c;
+SELECT NOT a AND b;
+SELECT 2 ^ 3 ^ 2;
+SELECT a = b AND c = d;
+SELECT (1 + 2) * 3;
+SELECT 1 + 2 * 3 - 4 / 2;
+SELECT a AND b OR c;
